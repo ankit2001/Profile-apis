@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.conf import settings
+
 class UserProfileManager(BaseUserManager):
     def create_user(self, name, email, password = None):
         if not email:
@@ -37,3 +39,15 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return self.email
+
+class ProfileFeed(models.Model):
+    objects = UserProfileManager()
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete = models.CASCADE,
+    )
+    status_text = models.CharField(max_length = 255)
+    timing = models.DateTimeField(auto_now_add = True)
+    
+    def __str__(self):
+        return self.status_text
