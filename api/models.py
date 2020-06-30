@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
-from django.conf import settings
+from project import settings
 
 class UserProfileManager(BaseUserManager):
     def create_user(self, name, email, password = None):
